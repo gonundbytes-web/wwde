@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wann war das eigentlich ?</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <meta name="theme-color" content="#4a90e2">
+</head>
+<body>
+    <header>
+        <h1>Wann war das eigentlich ?</h1>
+    </header>
+
+    <main>
+        <div id="start-screen" class="screen active">
+            <p>Wähle einen Ordner mit deinen Familienbildern aus.</p>
+            <p><em>Wichtig: Die Dateien müssen mit der Jahreszahl und einem Unterstrich benannt sein (z. B. "1997_1.jpg").</em></p>
+            <button id="btn-select-folder">Ordner öffnen & Spielen</button>
+        </div>
+
+        <div id="game-screen" class="screen">
+            <div id="top-area">
+                <div id="draw-area">
+                    </div>
+            </div>
+            
+            <div id="timeline-container">
+                </div>
+        </div>
+    </main>
+
+    <div id="fullscreen-modal" class="hidden">
+        <span id="close-modal">&times;</span>
+        <img id="fullscreen-img" src="" alt="Vollbild">
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Service Worker registrieren (notwendig für PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js').catch(err => {
+                    console.log('Service Worker Registrierung fehlgeschlagen:', err);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
