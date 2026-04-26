@@ -16,7 +16,7 @@ body, html {
     font-family: 'Poppins', sans-serif;
     background: linear-gradient(135deg, var(--bg-top), var(--bg-bottom));
     color: var(--text);
-    height: 100vh;
+    height: 100dvh;
     display: flex;
     flex-direction: column;
 }
@@ -128,7 +128,8 @@ button:hover {
     flex-direction: row;
     align-items: center;
     overflow-x: auto;
-    padding: 20px 30px 80px 30px;
+    padding: 20px 30px 60px 30px; 
+    margin-bottom: 15px; /* Dies schiebt die gesamte Leiste inkl. Scrollbar hoch */
     gap: 15px;
     flex: 1;
     position: relative;
@@ -139,14 +140,15 @@ button:hover {
 
 /* Scrollbar aufhübschen */
 #timeline-container::-webkit-scrollbar {
-    height: 10px;
+    height: 12px;
 }
 #timeline-container::-webkit-scrollbar-track {
     background: rgba(0,0,0,0.05);
 }
 #timeline-container::-webkit-scrollbar-thumb {
-    background: #cbd5e1;
+    background: var(--primary); /* Nutzt dein Indigoblau für bessere Sichtbarkeit */
     border-radius: 10px;
+    border: 2px solid white; /* Schafft einen Kontrast zum Hintergrund */
 }
 #timeline-container::-webkit-scrollbar-thumb:hover {
     background: #94a3b8;
