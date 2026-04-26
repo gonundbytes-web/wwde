@@ -265,3 +265,13 @@ button:hover {
 #draw-area div {
     transition: all 0.3s ease;
 }
+.header-logo {
+    height: 40px;      /* Passt die Höhe an den Text an */
+    width: auto;
+    border-radius: 8px; /* Der magische Kniff für den weichen Look */
+    border: 2px solid var(--primary); /* Ein feiner Rahmen in deiner Hauptfarbe */
+    padding: 2px;      /* Etwas Abstand zwischen Rahmen und Logo */
+    background: white; /* Falls das Logo transparent ist, hat es einen sauberen Hintergrund */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ein dezenter Schatten */
+    vertical-align: middle;
+}
