@@ -2,6 +2,12 @@ let imagePool = [];
 let timeline = [];
 let currentCard = null;
 let currentRotation = 0; // Speichert die aktuelle Drehung für das gezogene Bild
+let imagePool = [];
+let timeline = [];
+let currentCard = null;
+let currentRotation = 0;
+let mistakes = 0; // NEU: Zähler für Fehlversuche
+
 
 // UI Elemente referenzieren
 const startScreen = document.getElementById('start-screen');
@@ -99,23 +105,25 @@ window.placeCard = function(insertIndex) {
     const rightYear = insertIndex === timeline.length ? Infinity : timeline[insertIndex].year;
     
     if (currentCard.year >= leftYear && currentCard.year <= rightYear) {
-        // Richtig platziert!
+        // RICHTIG
         currentCard.rotation = currentRotation;
         timeline.splice(insertIndex, 0, currentCard);
         currentCard = null;
         render();
 
-        // Check ob gewonnen (1 Startbild + 10 richtig einsortierte = 11)
+        // Check ob gewonnen (10 Bilder einsortiert + 1 Startbild = 11)
         if (timeline.length >= 11) {
-            // Ein kurzes Timeout, damit das Bild erst noch gerendert wird, bevor die Nachricht kommt
             setTimeout(() => {
-                alert("Herzlichen Glückwunsch! Du hast 10 Bilder richtig einsortiert und das Spiel gewonnen! 🎉");
+                alert(`Geschafft! 🎉\nDu hast 10 Bilder richtig einsortiert.\n\nFehlversuche insgesamt: ${mistakes}`);
                 location.reload(); 
             }, 500);
         }
     } else {
-        alert(`Leider falsch! Das Bild stammt aus dem Jahr ${currentCard.year}.`);
-        resetGame();
+        // FALSCH (Neu: Kein Reset mehr!)
+        mistakes++; // Fehler zählen
+        alert(`Leider falsch! Das Bild war von ${currentCard.year}.\nVersuche es mit dem nächsten Bild.`);
+        currentCard = null; // Das falsche Bild verschwindet einfach
+        render(); // Zeigt wieder den "Vom Stapel nehmen" Button
     }
 }
 
