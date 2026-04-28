@@ -275,3 +275,13 @@ button:hover {
     box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Ein dezenter Schatten */
     vertical-align: middle;
 }
+/* Animation für einen Fehlversuch */
+@keyframes pulseRed {
+    0% { transform: scale(1); background-color: var(--primary); }
+    50% { transform: scale(1.05); background-color: #ef4444; box-shadow: 0 0 15px rgba(239, 68, 68, 0.6); }
+    100% { transform: scale(1); background-color: var(--primary); }
+}
+
+.btn-error {
+    animation: pulseRed 0.6s cubic-bezier(0.25, 1, 0.5, 1) !important;
+}

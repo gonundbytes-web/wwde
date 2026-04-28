@@ -2,12 +2,7 @@ let imagePool = [];
 let timeline = [];
 let currentCard = null;
 let currentRotation = 0; // Speichert die aktuelle Drehung für das gezogene Bild
-let imagePool = [];
-let timeline = [];
-let currentCard = null;
-let currentRotation = 0;
 let mistakes = 0; // NEU: Zähler für Fehlversuche
-
 
 // UI Elemente referenzieren
 const startScreen = document.getElementById('start-screen');
@@ -123,7 +118,7 @@ window.placeCard = function(insertIndex) {
         mistakes++; // Fehler zählen
         alert(`Leider falsch! Das Bild war von ${currentCard.year}.\nVersuche es mit dem nächsten Bild.`);
         currentCard = null; // Das falsche Bild verschwindet einfach
-        render(); // Zeigt wieder den "Vom Stapel nehmen" Button
+        render(true); // Zeigt wieder den "Vom Stapel nehmen" Button
     }
 }
 
@@ -132,7 +127,13 @@ function resetGame() {
 }
 
 // 6. Benutzeroberfläche aktualisieren
-function render() {
+function render(hasError = false) {
+    // Dynamischer HTML-Code für den Fehlerzähler (wird nur angezeigt, wenn Fehler > 0)
+    let mistakeHTML = '';
+    if (mistakes > 0) {
+        mistakeHTML = `<div style="color: #ef4444; font-weight: 700; background: #fee2e2; padding: 5px 15px; border-radius: 20px; display: inline-block;">Fehler: ${mistakes}</div>`;
+    }
+
     // A) Oberer Bereich
     if (currentCard) {
         drawArea.innerHTML = `
@@ -146,13 +147,19 @@ function render() {
                 <button onclick="rotateImage()" style="background-color: #94a3b8; font-size: 0.9rem; padding: 8px 16px; box-shadow: none;">
                     🔄 Bild drehen
                 </button>
-            </div>
+                ${mistakeHTML} </div>
         `;
     } else {
-        drawArea.innerHTML = `<button onclick="drawCard()">Bild vom Stapel nehmen</button>`;
+        // Wenn ein Fehler übergeben wurde, hängen wir die neue CSS-Klasse an
+        const errorClass = hasError ? 'btn-error' : '';
+        drawArea.innerHTML = `
+            <div style="display: flex; flex-direction: column; align-items: center; gap: 15px;">
+                <button class="${errorClass}" onclick="drawCard()">Bild vom Stapel nehmen</button>
+                ${mistakeHTML} </div>
+        `;
     }
 
-    // B) Zeitleiste
+    // B) Zeitleiste (bleibt exakt gleich)
     timelineContainer.innerHTML = '';
     for (let i = 0; i <= timeline.length; i++) {
         if (currentCard) {
